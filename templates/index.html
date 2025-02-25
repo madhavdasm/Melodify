@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MELODIFY - AI Music Recommender</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298); /* Gradient Blue */
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .description {
+            font-size: 20px;
+            font-style: italic;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: darkred;
+        }
+        .weather-info {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}">
+        <button class="logout-btn">Logout</button>
+    </a>
+
+    <div class="container mt-5">
+        <div class="container-box">
+            <div class="title">🎵 MELODIFY 🎵</div>
+            <div class="description">AI-Enhanced Indian Classical & Film Music Recommendations!</div>
+        </div>
+
+        <!-- Weather Info Display -->
+        <p id="weather-info" class="weather-info">Detecting Weather...</p>
+
+        <form method="POST" id="music-form" class="mt-4">
+            <input type="hidden" name="weather" id="weather-input"> <!-- Hidden field for weather -->
+            
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <label class="form-label">Select Your Emotion:</label>
+                    <select name="emotion" class="form-select">
+                        <option value="Happy">Happy</option>
+                        <option value="Sad">Sad</option>
+                        <option value="Calm">Calm</option>
+                        <option value="Excited">Excited</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-warning mt-3">Get Recommendations</button>
+        </form>
+
+        {% if songs %}
+        <div class="mt-4">
+            <h3>🎶 Recommended Songs 🎶</h3>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                {% for song in songs %}
+                    <iframe src="{{ song.replace('open', 'embed') }}" width="300" height="80" frameborder="0" allow="encrypted-media"></iframe>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    fetch("/weather", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.weather) {
+                            document.getElementById("weather-info").innerText = "Hello user! Today is " + data.weather + " – Enjoy the vibes! 🎶: " ;
+                            document.getElementById("weather-input").value = data.weather;
+                        } else {
+                            document.getElementById("weather-info").innerText = "Could not determine weather.";
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById("weather-info").innerText = "Error fetching weather.";
+                        console.error("Error fetching weather:", error);
+                    });
+                });
+            } else {
+                document.getElementById("weather-info").innerText = "Geolocation is not supported by this browser.";
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

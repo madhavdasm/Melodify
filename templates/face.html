@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facial Emotion Detection (Captured Photo)</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+  <style>
+    body { text-align: center; font-family: Arial, sans-serif; background-color: #222; color: white; }
+    video, canvas { width: 720px; height: 560px; border: 2px solid white; }
+    #captureBtn { margin-top: 10px; padding: 10px; font-size: 18px; background-color: green; color: white; border: none; cursor: pointer; }
+    #captureBtn:hover { background-color: darkgreen; }
+    #photoContainer { margin-top: 20px; }
+    #emotionResult { font-size: 22px; font-weight: bold; color: yellow; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>Facial Emotion Detection (Captured Photo)</h1>
+  <video id="video" autoplay></video>
+  <button id="captureBtn">Capture Photo</button>
+  <div id="photoContainer"></div>
+  <p id="emotionResult"></p>
+
+  <script>
+    const video = document.getElementById('video');
+    const captureBtn = document.getElementById('captureBtn');
+    const photoContainer = document.getElementById('photoContainer');
+    const emotionResult = document.getElementById('emotionResult');
+
+    async function startVideo() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.onloadedmetadata = () => console.log("Camera access granted!");
+      } catch (err) {
+        console.error("Error accessing webcam:", err);
+        alert("Camera access denied or not available. Please check permissions.");
+      }
+    }
+
+    async function loadFaceAPIModels() {
+      await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js/weights');
+      await faceapi.nets.faceExpressionNet.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js/weights');
+    }
+
+    async function capturePhoto() {
+      console.log("Capture button clicked!");
+
+      if (!video.videoWidth || !video.videoHeight) {
+        console.error("Video not ready yet");
+        alert("Video is not fully loaded. Please wait.");
+        return;
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert to image and display it
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.style.border = "2px solid white";
+
+      // Clear previous images and add new one
+      photoContainer.innerHTML = "";
+      photoContainer.appendChild(img);
+
+      // Save image as a file (download)
+      const link = document.createElement('a');
+      link.href = img.src;
+      link.download = "captured_face.png";
+      link.innerText = "Download Image";
+      link.style.display = "block";
+      link.style.color = "yellow";
+      link.style.marginTop = "10px";
+      photoContainer.appendChild(link);
+
+      console.log("Photo captured!");
+
+      // Analyze emotion from the captured image
+      detectEmotionFromImage(canvas);
+    }
+
+    async function detectEmotionFromImage(canvas) {
+      const detection = await faceapi.detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+
+      if (!detection) {
+        emotionResult.innerText = "No face detected in photo!";
+        return;
+      }
+
+      // Get highest confidence emotion
+      const expressions = detection.expressions;
+      const sortedEmotions = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
+      const topEmotion = sortedEmotions[0][0];
+
+      emotionResult.innerText = `Detected Emotion: ${topEmotion.toUpperCase()} 😊`;
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadFaceAPIModels();
+      captureBtn.addEventListener('click', capturePhoto);
+      startVideo();
+    });
+
+  </script>
+
+</body>
+</html>

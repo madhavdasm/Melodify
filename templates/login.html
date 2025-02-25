@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/login.css">
+  <style>
+    .alert {
+      color: red;
+      text-align: center;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login form">
+      <header>Login</header>
+      
+      <form action="{{ url_for('login') }}" method="POST">
+        <input type="text" name="username" placeholder="Enter your username" required>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        
+        <!-- Flash Messages Below Password Input -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <input type="submit" class="button" value="Login">
+      </form>
+      <div class="signup">
+        <span>Don't have an account?
+            <a href="{{ url_for('register') }}">Signup</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
