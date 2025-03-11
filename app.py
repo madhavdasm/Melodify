@@ -12,7 +12,7 @@ df = pd.read_csv("Dataset.csv", encoding="utf-8")
 df.columns = df.columns.str.strip()  # Remove extra spaces from column names
 
 # Ensure dataset contains required columns
-expected_columns = {"Emotion", "Weather", "Link"}
+expected_columns = {"Emotion", "Weather", "Link", "Raga"}
 if not expected_columns.issubset(df.columns):
     raise ValueError(f"Missing expected columns: {expected_columns - set(df.columns)}")
 
@@ -62,7 +62,7 @@ def get_weather(lat, lon):
     else:
         return None  # Return None if weather data isn't available
 
-# Function to get song recommendations
+# Function to get song recommendations along with ragas
 def get_recommendations(emotion, weather):
     filtered_songs = df[
         (df["Emotion"].str.lower().str.strip() == emotion.lower()) &
@@ -70,15 +70,17 @@ def get_recommendations(emotion, weather):
     ]
 
     selected_songs = (
-        filtered_songs["Link"]
+        filtered_songs[["Link", "Raga"]]
         .dropna()
         .astype(str)
-        .str.strip()
+        .applymap(str.strip)
         .sample(n=min(3, len(filtered_songs)))
-        .tolist()
     )
 
-    return [song.replace("open.spotify.com", "open.spotify.com/embed") for song in selected_songs]
+    songs = selected_songs["Link"].tolist()
+    ragas = selected_songs["Raga"].unique().tolist()
+
+    return ([song.replace("open.spotify.com", "open.spotify.com/embed") for song in songs], ragas)
 
 # Route: Home -> Redirect to Login
 @app.route("/")
@@ -92,17 +94,17 @@ def index():
         flash("Please log in first!", "warning")
         return redirect(url_for("login"))
 
-    songs = []
+    songs, ragas = [], []
     detected_weather = session.get("weather")  # Get weather stored in session
 
     if request.method == "POST":
         emotion = request.form.get("emotion")
         if detected_weather:
-            songs = get_recommendations(emotion, detected_weather)
+            songs, ragas = get_recommendations(emotion, detected_weather)
         else:
             flash("Could not determine weather. Try again!", "warning")
 
-    return render_template("index.html", songs=songs, detected_weather=detected_weather)
+    return render_template("index.html", songs=songs, ragas=ragas, detected_weather=detected_weather)
 
 # Route: Fetch Weather via API Call (Used by JS)
 @app.route("/weather", methods=["POST"])
@@ -119,7 +121,6 @@ def weather():
     
     return jsonify({"error": "Could not determine weather"}), 400
 
-# Route: User Registration
 # Route: User Registration
 @app.route("/register", methods=["GET", "POST"])
 def register():

@@ -1,22 +1,32 @@
 Emotion,Weather,Raga,Singer,Composer,Song,Link
-Happy,rain,Hamsadhwani,K J Yesudas,Muthuswami Dikshitar,Vaatapi Ganapathim,https://open.spotify.com/track/3YlTsXQIWByBGKteLOuQg8
-Happy,rain,Hamsadhwani,"G Venugopal,Radhika Thilak",sharreth,maya manjalil,https://open.spotify.com/track/4fuT1LKVUtgOm7lRL1ADub
-Happy,rain,Hamsadhwani,K J Yesudas,raveendran ,sree vinayakam,https://open.spotify.com/track/1nbZQLzBrbDHn6H46kED2G
-Happy,rain,Hamsadhwani,K J Yesudas,sharreth,aa ragam,https://open.spotify.com/track/6F9r7ZSfklOpepG1QOeTYd
-Happy,rain,Hamsadhwani,K J Yesudas,Ilaiyaraaja,Vaalittezhuthiya,https://open.spotify.com/track/5E219RKGgXfSmGt2cjqJAJ
+Happy,cloudy,Hamsadhwani,K J Yesudas,Muthuswami Dikshitar,Vaatapi Ganapathim,https://open.spotify.com/track/3YlTsXQIWByBGKteLOuQg8
+Happy,cloudy,Hamsadhwani,"G Venugopal,Radhika Thilak",sharreth,maya manjalil,https://open.spotify.com/track/4fuT1LKVUtgOm7lRL1ADub
+Happy,cloudy,Hamsadhwani,K J Yesudas,raveendran ,sree vinayakam,https://open.spotify.com/track/1nbZQLzBrbDHn6H46kED2G
+Happy,cloudy,Hamsadhwani,K J Yesudas,sharreth,aa ragam,https://open.spotify.com/track/6F9r7ZSfklOpepG1QOeTYd
+Happy,cloudy,Hamsadhwani,K J Yesudas,Ilaiyaraaja,Vaalittezhuthiya,https://open.spotify.com/track/5E219RKGgXfSmGt2cjqJAJ
 Happy ,Sunny,Kalyani,V Devanand,Vidyasagar,Kaadirangi odivarum,https://open.spotify.com/track/064FhOxnMFX0OH0ONRwW5T
 Happy ,Sunny,Kalyani,"M G Sreekumar,K S Chithra",Vidyasagar,vellinila,https://open.spotify.com/track/6Y8BfAciA0NFKxRL61MMM1
 Happy ,Sunny,Kalyani,"V Devanand,Sujatha Mohan",Vidyasagar,Thotturummi,https://open.spotify.com/track/2ckEuHRIslaCSojHZILa72
 Happy ,Sunny,Kalyani,"K J Yesudas,S Janaki",Ilaiyaraaja,poomkaatinodum,https://open.spotify.com/track/0451brr56bCl3plozklXyc
 Happy ,Sunny,Kalyani,"Madhu Balakrishnan,Swetha Mohan",Ilaiyaraaja,mandarapoo mooli,https://open.spotify.com/track/2eh5e9wzQrB1Sb9HQN170m
-Happy ,Sunny,Kalyani,"S P Balasubrahmanyam
-,S Janaki",Ilaiyaraaja,sundari kannal,https://open.spotify.com/track/6mssbRQ5gvSac5YWjPiVgl
-Happy,rain,Shankarabharanam,"MG Sreekumar,KS Chithra",MG Radhakrishnan,Ambalappuzhe,https://open.spotify.com/track/667uJqfYpR5Q7L8cf7iLjY
-Happy,rain,Shankarabharanam,"K J Yesudas,Shabnam Riyaz",Vidyasagar,Vennilaa chandanakkinnam (D),https://open.spotify.com/track/1x0aIrIahr9wTx4Fu0ehNV
-Happy,rain,Shankarabharanam,"MG Sreekumar,Manjari",MG Radhakrishnan,Pinakkamaano,http://open.spotify.com/track/6xjzMt27vO6fhHxXGsligl
-Happy,rain,Shankarabharanam,K S Chithra,Ilaiyaraaja,Enthu Paranjaalum [F],https://open.spotify.com/track/2joEDRkMMB593yGWKWYsXI
-Happy,rain,Shankarabharanam,"KS Harishankar,Poornasree",Rahul Raj,Then Panimathiye,https://open.spotify.com/track/1sm3MkVfndyW6VekIkHWSH
-Happy,Sunny,Madyamavathi,"M G Sreekumar, Sujatha Mohan", P. Sundararajan,Orikkal Nee,https://open.spotify.com/track/002V0rc7CAgdJPoNwDPdW1?si=MCR0Oqs2TY-l9EuacW9QiA
-Happy ,Sunny  ,Madyamavathi,P. Jayachandran,Berni Ignatius,Aaruparanju,https://open.spotify.com/track/2I3FrVLcTnulArSPzMy7kY?si=YncNiY5sRDqXsMNSAEP8sw
-Happy ,Sunny,Madyamavathi,"Balaram, Sujatha Mohan",Vidyasagar,Pai Kurumbiye,https://open.spotify.com/track/5oPuUgT79wAJMVfsGuow6T?si=nHfEN1B7QBa9Ml8AmXiEqg
-Happy ,Sunny,Madyamavathi,M. G. Sreekumar,M. G. Radhakrishnan,Pazhanimala,https://open.spotify.com/track/5pfcV8XIU3V4iYqocMGEwR?si=_xW_yZpURm-Z0rpIgEXYCg
+Happy ,Sunny,Kalyani,"S P Balasubrahmanyam,S Janaki",Ilaiyaraaja,sundari kannal,https://open.spotify.com/track/6mssbRQ5gvSac5YWjPiVgl
+Neutral,Sunny,Shankarabharanam,"MG Sreekumar,KS Chithra",MG Radhakrishnan,Ambalappuzhe,https://open.spotify.com/track/667uJqfYpR5Q7L8cf7iLjY
+Neutral,Sunny,Shankarabharanam,"K J Yesudas,Shabnam Riyaz",Vidyasagar,Vennilaa chandanakkinnam (D),https://open.spotify.com/track/1x0aIrIahr9wTx4Fu0ehNV
+Neutral,Sunny,Shankarabharanam,"MG Sreekumar,Manjari",MG Radhakrishnan,Pinakkamaano,http://open.spotify.com/track/6xjzMt27vO6fhHxXGsligl
+Neutral,Sunny,Shankarabharanam,K S Chithra,Ilaiyaraaja,Enthu Paranjaalum [F],https://open.spotify.com/track/2joEDRkMMB593yGWKWYsXI
+Neutral,Sunny,Shankarabharanam,"KS Harishankar,Poornasree",Rahul Raj,Then Panimathiye,https://open.spotify.com/track/1sm3MkVfndyW6VekIkHWSH
+Angry,Sunny,Madyamavathi,"M G Sreekumar, Sujatha Mohan", P. Sundararajan,Orikkal Nee,https://open.spotify.com/track/002V0rc7CAgdJPoNwDPdW1?si=MCR0Oqs2TY-l9EuacW9QiA
+Angry,Sunny  ,Madyamavathi,P. Jayachandran,Berni Ignatius,Aaruparanju,https://open.spotify.com/track/2I3FrVLcTnulArSPzMy7kY?si=YncNiY5sRDqXsMNSAEP8sw
+Angry,Sunny,Madyamavathi,"Balaram, Sujatha Mohan",Vidyasagar,Pai Kurumbiye,https://open.spotify.com/track/5oPuUgT79wAJMVfsGuow6T?si=nHfEN1B7QBa9Ml8AmXiEqg
+Angry,Sunny,Madyamavathi,M. G. Sreekumar,M. G. Radhakrishnan,Pazhanimala,https://open.spotify.com/track/5pfcV8XIU3V4iYqocMGEwR?si=_xW_yZpURm-Z0rpIgEXYCg
+Sad ,Sunny,sindhu bhairavi,"KJ Yesudas,S Janaki",Ilayaraja,Konchi Karayalle,https://open.spotify.com/track/6PgDrdmlaoZOENJL4sHYrI
+Sad ,Sunny,sindhu bhairavi,KJ Yesudas,Raveendran,Harimuraleeravam,https://open.spotify.com/track/49fz8ZaeCXkvJ4GysGviY1
+Sad ,Sunny,sindhu bhairavi,KJ Yesudas,Ilayaraja,Snehathin poonchola,https://open.spotify.com/track/2upj1XwLpmZxKVuO9vSQHX
+Sad ,Sunny,sindhu bhairavi,KJ Yesudas,Ouseppachan,Raappadi,https://open.spotify.com/track/3pVgK4GgRU1VaorlAPKK48
+Sad ,Sunny,sindhu bhairavi,KJ Yesudas,Mohan Sithara,Aalilakkanna Ninte ,https://open.spotify.com/track/1qerQDivue4GGec1LSwbaW
+Sad ,Sunny,sindhu bhairavi,Biju Narayanan,Vidyasagar,Sooryanay Thazhuki,https://open.spotify.com/track/2sB91LcVLstoiHf0R5pwNL
+sad ,Sunny  ,Harikambhoji,KS Chithra,M.G Radhakrishnan,Varuvaanillarumee Vayizhe,https://open.spotify.com/track/5LsB8kmXwfjQDNmW5saFJV
+sad ,rainy ,sindhu bhairavi,KJ Yesudas,Raveendram,Harimuraleeravam,https://open.spotify.com/track/49fz8ZaeCXkvJ4GysGviY1
+Happy ,Sunny  ,Sahana,MG Sreekumar,Berny Ignatius,Tamara Poovil Vazhum ,https://open.spotify.com/search/tamara
+Happy ,Sunny  ,Aabheri,KS Chithra,Shyam,Poomaaname Oru Raga ,https://open.spotify.com/search/pooma
+Happy,rainy ,Shyam kalyan,MG Sreekumar,Berny Ignatius,Oru kathilola,https://open.spotify.com/track/46oB8t0ada0W87YyWfbSud
