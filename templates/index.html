@@ -7,14 +7,37 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         body {
-            background: #009579;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='bg2.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed; /* Ensures it stays full-screen on scroll */
+            height: 100vh; /* Ensures it takes the full viewport height */
+            width: 100vw; /* Ensures it takes the full viewport width */
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Center all text */
+
         }
+
+        .song-text {
+            font-size: 20px; /* Adjust size as needed */
+            font-weight: normal; /* Optional: Reduce boldness */
+            color: white !important;
+
+        }
+
         .container-box {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(50, 45, 45, 0.6);
             padding: 30px;
+            border-radius: 15px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .container-box2 {
+            background-color: rgba(50, 45, 45, 0.6);
+            padding: 30px 30px 10px; /* Reduced bottom padding */
             border-radius: 15px;
             margin-top: 50px;
             backdrop-filter: blur(10px);
@@ -28,12 +51,14 @@
             font-size: 42px;
             font-weight: bold;
             color: #FFD700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(12, 10, 10, 0.3);
         }
         .description {
+            color: white !important;
             font-size: 20px;
             font-style: italic;
         }
+
         .logout-btn {
             position: absolute;
             top: 20px;
@@ -56,18 +81,6 @@
             color: #FFD700;
             margin-top: 10px;
         }
-        .ragas-box {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 10px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-top: 15px;
-        }
-        .ragas-box p {
-            font-size: 18px;
-            color: #FFD700;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -77,50 +90,24 @@
 
     <div class="container mt-5">
         <div class="container-box">
-            <div class="title">🎵 MELODIFY 🎵</div>
-            <div class="description">AI-Enhanced Indian Classical & Film Music Recommendations!</div>
+            <div class="title">MELODIFY</div>
+            <div class="description">AI-Enhanced Indian Classical & Film Music Recommendations</div>
         </div>
 
         <p id="weather-info" class="weather-info">Detecting Weather...</p>
 
-        <form method="POST" id="music-form" class="mt-4">
+        <form method="POST" action='/index' id="music-form" class="mt-4">
             <input type="hidden" name="weather" id="weather-input">
-            
-            <div class="row justify-content-center">
-                <div class="col-md-3">
-                    <label class="form-label">Select Your Emotion:</label>
-                    <select name="emotion" class="form-select">
-                        <option value="Happy">Happy</option>
-                        <option value="Sad">Sad</option>
-                        <option value="Angry">Calm</option>
-                        <option value="Neutral">Excited</option>
-                    </select>
-                </div>
-            </div>
             <button type="submit" class="btn btn-warning mt-3">Get Recommendations</button>
         </form>
 
-        {% if ragas %}
-        <div class="ragas-box">
-            <p>🎼 Selected Ragas for Your Mood:</p>
-            <p>
-                {% for raga in ragas %}
-                    {{ raga }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-            </p>
+        <div id="song-container" class="mt-4">
+            {% if song %}
+            <iframe src="{{ song.replace('open', 'embed') }}" width="800" height="350" frameborder="0" allow="encrypted-media"></iframe>
+            <h2 class="song-text">Raga {{ session['raga'] }} perfectly captures the essence of {{ session['emotion'] | capitalize }} in {{ session['weather'] | capitalize }}, making this song the ideal melody for the moment. 🎶</h2>
+            {% endif %}
         </div>
-        {% endif %}
-
-        {% if songs %}
-        <div class="mt-4">
-            <h3>🎶 Recommended Songs 🎶</h3>
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-                {% for song in songs %}
-                    <iframe src="{{ song.replace('open', 'embed') }}" width="300" height="80" frameborder="0" allow="encrypted-media"></iframe>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
+        
     </div>
 
     <script>
@@ -148,8 +135,8 @@
                             greeting += "It’s raining—perfect for some soothing music! ☔🎧";
                         } else if (weatherCondition.includes("Wind")) {
                             greeting += "The wind is strong—let’s match it with some powerful beats! 🌬️🎼";
-                        } else if (weatherCondition.includes("Snow")) {
-                            greeting += "It’s snowing—stay warm with cozy tunes! ❄️🎶";
+                        } else if (weatherCondition.includes("Sunny")) {
+                            greeting += "The sun is shining bright ☀️ — perfect time to groove to some uplifting melodies! 🎶😊";
                         } else {
                             greeting += "Enjoy the vibes today with your perfect playlist! 🎵";
                         }
@@ -167,6 +154,39 @@
             }
         });
     </script>
+<script>
+    document.getElementById("music-form").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form from reloading the page
+
+        fetch("/index", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.song) {
+        let songEmbedUrl = data.song.replace("open", "embed");
+
+        // Update song container with dynamic Raga, Emotion, and Weather
+        document.getElementById("song-container").innerHTML = `
+            <div class='container-box2'>
+            <h2 class="song-text">🎶Raga ${data.raga} perfectly captures the essence of ${data.emotion} in ${data.weather}, making this song the ideal melody for the moment.✨</h2>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <br>
+            <iframe src="${songEmbedUrl}" width="600" height="300" frameborder="0" allow="encrypted-media"></iframe>
+            </div>
+        `;
+    } else {
+        document.getElementById("song-container").innerHTML = "<p>No song found.</p>";
+    }
+})
+.catch(error => console.error("Error:", error));
+   
+    });
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
