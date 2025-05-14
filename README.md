@@ -1,149 +1,140 @@
-# Music Recommendation System Based on Emotion and Weather
 
-## Overview
 
-This is a Flask-based web application that recommends music based on:
-- User's current emotional state (detected via facial recognition)
-- Local weather conditions
-- User's past feedback on recommendations
+# 🎵 Melodify - AI-based Indian Music Recommendation System
 
-The system uses a hybrid recommendation approach combining:
-- Content-based filtering (cosine similarity on song metadata)
-- Context-aware filtering (emotion + weather matching)
-- Random selection as fallback for new users
+**Melodify** is a Flask-based web application that recommends Indian classical and film songs to users based on their detected **emotion** (via facial expression) and **current weather** (via geolocation). The system uses AI for face emotion detection and hybrid recommendation logic powered by user feedback and content similarity.
 
-## Key Features
+---
 
-1. **User Authentication**
-   - Secure login/registration with password hashing
-   - Session management
+## 🚀 Features
 
-2. **Emotion Detection**
-   - Uses DeepFace library for facial emotion analysis
-   - Maps detected emotions to musical moods
-   - Handles edge cases (no face detected, low confidence)
+* **Emotion Detection** using `DeepFace`
+* **Weather Detection** via OpenWeatherMap API
+* **Hybrid Song Recommendation** based on:
 
-3. **Weather Integration**
-   - Connects to OpenWeatherMap API
-   - Classifies weather into Sunny/Rainy/Cloudy
-   - Stores weather context in session
+  * Emotion + Weather match
+  * User feedback (likes)
+  * Cosine similarity of singer-composer combinations
+* **Like/Dislike Feedback System** to personalize future recommendations
+* **Avoids repeating recently recommended songs**
+* **Similarity Matrix Visualization** (optional)
+* **User Registration & Login** with hashed passwords
+* Backend in **Flask**, frontend via HTML templates
 
-4. **Hybrid Recommendation Engine**
-   - For new users: Uses emotion + weather filtering
-   - For existing users: Content-based filtering on liked songs' metadata
-   - Avoids repeating recent recommendations
-   - Tracks user feedback (likes/dislikes) to improve future suggestions
+---
 
-5. **Visual Analytics**
-   - Generates similarity heatmaps for recommendations
-   - Logs detailed emotion detection probabilities
+## 🧠 How It Works
 
-## Technical Stack
+1. **User logs in** or creates an account.
+2. **Face image** is captured and analyzed via DeepFace to detect emotion.
+3. **Weather** is detected using the user's geolocation.
+4. **A song is recommended** from a curated dataset, based on:
 
-- **Backend**: Python (Flask)
-- **Database**: SQLite
-- **Computer Vision**: OpenCV, DeepFace
-- **Machine Learning**: scikit-learn (TF-IDF, cosine similarity)
-- **Visualization**: Matplotlib, Seaborn
-- **Frontend**: HTML/CSS/JavaScript
+   * Matching EMOTION + WEATHER
+   * Prior liked songs (cosine similarity on artist data)
+   * Fallback to random if needed
+5. **User can like/dislike the song**, improving future recommendations.
+6. Feedback is stored in **SQLite** and used to adjust future suggestions.
 
-## Setup Instructions
+---
 
-1. **Prerequisites**
-   - Python 3.7+
-   - pip
+## 📁 Dataset Structure
 
-2. **Installation**
-   ```bash
-   git clone [repository-url]
-   cd [repository-folder]
-   pip install -r requirements.txt
-   ```
+The dataset (`Dataset.csv`) must include the following columns:
 
-3. **Configuration**
-   - Get an OpenWeatherMap API key
-   - Create a `.env` file in the root directory and add:
-     ```env
-     WEATHER_API_KEY=your_api_key_here
-     ```
-   - Ensure `Dataset.csv` is in the project root
+* `EMOTION`
+* `WEATHER`
+* `LINK` (YouTube or audio URL)
+* `RAGA`
+* `SINGER`
+* `COMPOSER`
 
-4. **Initialize Database**
-   ```bash
-   python
-   >>> from app import init_db
-   >>> init_db()
-   >>> exit()
-   ```
+---
 
-5. **Run Application**
-   ```bash
-   python app.py
-   ```
+## 🛠️ Tech Stack
 
-## Usage
+* **Frontend**: HTML, Bootstrap (in `templates/`)
+* **Backend**: Python, Flask
+* **AI Libraries**:
 
-1. Register a new account or login
-2. Allow camera access for emotion detection
-3. Grant location access for weather data
-4. Receive personalized music recommendations
-5. Provide feedback (like/dislike) to improve future recommendations
+  * `DeepFace` for facial emotion recognition
+  * `scikit-learn` for TF-IDF and cosine similarity
+* **Database**: SQLite (`users.db`)
+* **Data Visualization**: Seaborn + Matplotlib (for similarity matrix)
 
-## File Structure
+---
 
-```
-├── app.py                # Main application file
-├── Dataset.csv           # Music dataset
-├── users.db              # SQLite database (created after first run)
-├── static/               # Static files
-│   └── captured_image.png # Temporary image storage
-├── templates/            # HTML templates
-│   ├── face.html         # Emotion detection interface
-│   ├── index.html        # Recommendation interface
-│   ├── login.html        # Login page
-│   └── register.html     # Registration page
-├── .env                  # Environment variables (API key)
-└── requirements.txt      # Python dependencies
+## 🔧 Setup Instructions
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/yourusername/Melodify.git
+cd Melodify
 ```
 
-## Dataset Format
+### 2. Install Dependencies
 
-The system expects `Dataset.csv` with these required columns:
+```bash
+pip install -r requirements.txt
+```
 
-| EMOTION  | WEATHER | LINK | RAGA | SINGER | COMPOSER |
-|----------|--------|------|------|--------|----------|
-| Happy    | Sunny  | [YouTube link] | Raag Bhairav | Arijit Singh | A.R. Rahman |
-| Sad      | Rainy  | [YouTube link] | Raag Yaman | Lata Mangeshkar | R.D. Burman |
-| Neutral  | Cloudy | [YouTube link] | Raag Darbari | Kishore Kumar | S.D. Burman |
+(Ensure `deepface`, `opencv-python`, `flask`, `requests`, `scikit-learn`, `matplotlib`, `seaborn`, etc. are included in `requirements.txt`.)
 
-## API Endpoints
+### 3. Add Dataset
 
-- `/register` - User registration
-- `/login` - User authentication
-- `/face` - Emotion detection interface
-- `/capture` - Handles image capture
-- `/detect_emotion` - Processes emotion analysis
-- `/weather` - Fetches weather data
-- `/index` - Main recommendation interface
-- `/feedback` - Processes user feedback
+Place `Dataset.csv` in the root directory with appropriate columns.
 
-## Troubleshooting
+### 4. Configure Weather API
 
-1. **Emotion detection fails**
-   - Ensure good lighting
-   - Face should be clearly visible
-   - Check browser console for errors
+Replace the OpenWeatherMap API key in `get_weather()` function with your own:
 
-2. **Weather not loading**
-   - Verify API key is valid
-   - Check internet connection
-   - Ensure location permissions are granted
+```python
+API_KEY = "your_openweathermap_api_key"
+```
 
-3. **No recommendations**
-   - Verify Dataset.csv is properly formatted
-   - Check application logs for errors
+### 5. Run the App
 
-## License
+```bash
+python app.py
+```
 
-This project is open-source under the MIT License.
 
+---
+
+## 🔐 User Auth
+
+* Passwords are securely hashed using `werkzeug.security`.
+* SQLite stores users and feedback in `users.db`.
+* Table structures are auto-created on app run (`init_db()` function).
+
+---
+
+## 🎯 Future Enhancements
+
+* 🎤 Voice-based emotion recognition
+* 📱 Mobile-friendly UI
+* 🎶 Spotify/Youtube integration for song playback
+* 💾 Admin dashboard for adding/removing songs
+* 🤖 Reinforcement learning for smarter personalization
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork and submit pull requests or suggestions!
+
+---
+
+## 📷 Screenshots
+
+
+---
+
+## 📄 License
+
+This project is open-source and free to use for educational purposes.
+
+---
+
+Let me know if you’d like me to generate a `requirements.txt` file or provide example screenshots section too.
