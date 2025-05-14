@@ -1,6 +1,6 @@
 
 
-# 🎵 Melodify - AI-based Indian Music Recommendation System
+# 🎵 Melodify - AI-Enhanced Indian Classical Music Recommendation System
 
 **Melodify** is a Flask-based web application that recommends Indian classical and film songs to users based on their detected **emotion** (via facial expression) and **current weather** (via geolocation). The system uses AI for face emotion detection and hybrid recommendation logic powered by user feedback and content similarity.
 
@@ -141,4 +141,3 @@ This project is open-source and free to use for educational purposes.
 
 ---
 
-Let me know if you’d like me to generate a `requirements.txt` file or provide example screenshots section too.
