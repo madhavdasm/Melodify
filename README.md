@@ -128,6 +128,10 @@ Feel free to fork and submit pull requests or suggestions!
 
 ## 📷 Screenshots
 
+### 🎵 Song Recommendation Result
+
+![Recommendation Output](Recommendation.png)
+
 
 ---
 
